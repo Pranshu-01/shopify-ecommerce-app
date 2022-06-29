@@ -1,0 +1,107 @@
+<%- include("../../partials/header") %> 
+<%- include("../../partials/navbar") %>
+
+
+<main class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card mx-auto" style="width: 20rem;">
+                <img src="<%= product.img %> " class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title"><%= product.name %> </h5>
+                  <p class="card-text"><%= product.desc %> </p>
+                  <h5 class="card-title">&#x20B9 <%= product.price %> </h5>
+                  <% if(product.rating>0) {%>
+                  <h5 class="card-title mb-3" id="rating"><%= product.rating%> <i class="bi bi-star-fill" style="color:green; "></i></h5>
+                    <% } %>  
+                    <% if(isSeller && isSeller.role=='seller'){ %> 
+                  
+                  <!-- <a href="#" class="btn btn-success btn-sm">Buy</a> -->
+                  <a href="#" class="btn btn-primary btn-md">Add to Cart</a>
+                  <a href="/products/category/women-shoes/<%=product._id%>/edit " class="btn btn-warning btn-md ms-1">Edit</a>
+
+                  <form class="d-inline-block" action="/products/category/women-shoes/<%= product._id %>?_method=DELETE" method="POST">
+                    <button class="btn btn-danger btn-md ms-1">Delete</button>
+                </form>
+
+                <% } else{%>
+                  <a href="#" class="btn btn-success btn-md w-100">Add to Cart</a>
+                  <% } %>  
+                  
+                </div>
+              </div>
+
+        </div>
+
+        <div class="col-lg-5">
+          
+          <h1 class="display-6 mb-3" id="textShadow">Review this Product</h1>
+             <% if(product.rating>0) {%>
+                <h5 class="card-title mb-3" id="rating"><%= product.rating%> <i class="bi bi-star-fill" style="color:green; "></i></h5>
+                  <% } %> 
+          <div class="mb-3">
+            
+            <form action="/products/category/women-shoes/<%=product._id%>/review" method="POST">
+              
+              <fieldset class="starability-basic">
+                <input type="radio" id="no-rate" class="input-no-rate" name="rating" value="0" checked aria-label="No rating." />
+                <input type="radio" id="first-rate1" name="rating" value="1" />
+                <label for="first-rate1" title="Terrible">1 star</label>
+                <input type="radio" id="first-rate2" name="rating" value="2" />
+                <label for="first-rate2" title="Not good">2 stars</label>
+                <input type="radio" id="first-rate3" name="rating" value="3" />
+                <label for="first-rate3" title="Average">3 stars</label>
+                <input type="radio" id="first-rate4" name="rating" value="4" />
+                <label for="first-rate4" title="Very good">4 stars</label>
+                <input type="radio" id="first-rate5" name="rating" value="5" />
+                <label for="first-rate5" title="Amazing">5 stars</label>
+              </fieldset>
+                <div class="mb-3" id="textShadow">
+                    <label class="form-label" for="comment" style="font-size:1.2rem ;">Comment</label>
+                    <textarea class="card form-control" name="comment" id="comment" rows="4" required></textarea>
+                </div>
+
+                <button class="btn btn-success">Submit</button>
+            </form>
+
+           
+        </div>
+
+        
+        <div class="mb-3">
+          <div class="mb-3" id="textShadow">
+
+              <% for(let review of product.reviews){ %>
+                  <div class="card mb-2">
+                      <div class="card-body">
+
+
+                        <h5 class="card-title text-capitalize" id="textShadow" >
+                          <i class="bi bi-person-circle"></i> <%= review.user %>
+                        </h5>
+
+
+                        <h5 class="card-title pt-1">
+                          <p class="starability-result" data-rating="<%=review.rating%>">
+                              Rated: <%=review.rating%>  stars
+                            </p>
+                        </h5>
+                        <p class="card-text fw-semibold"><%= review.comment %> </p>
+
+                        <form class="d-inline-block" action="/products/category/women-shoes/<%=review._id%>/review?_method=DELETE" method="POST">
+                          <button class="btn btn-danger btn-sm">Delete</button>
+                      </form>
+                        <!-- <a href="#" class="btn btn-small btn-danger">Delete</a> -->
+                      </div>
+                    </div>
+                  <% } %>  
+          </div>
+      </div>
+      </div>
+    </div>
+</main>
+
+
+
+
+<%- include("../../partials/footer") %> 

@@ -1,0 +1,96 @@
+<%- include("../partials/header") %> 
+<%- include("../partials/navbar") %>
+
+
+ 
+<main class="container">
+	<%- include("../partials/flash") %>
+
+	<div class="row">
+    <% if(user.cart.length>0) {%> 
+      
+		<div class="col-lg-6">
+           
+            <% for(let item of user.cart) {%>
+                      
+                <div class="card mx-auto mb-3">
+                   
+                    <div class="row g-0">
+                      <div class="col-md-4">
+                        <img src="<%=item.img%>" class="img-fluid" alt="...">
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body">
+                          <h5 class="card-title"><%=item.name%> </h5>
+                          <p class="cart-text"><%=item.desc%> </p>
+                          <h5 class="card-title">&#x20B9 <%=item.price%> </h5>
+                          <% if(item.rating>0) {%>
+                            <h5 class="card-title mb-3" id="rating"><%= item.rating%> <i class="bi bi-star-fill" style="color:green; "></i></h5>
+                              <% } %> 
+
+                          
+                             
+                                 
+                                 <label for="number"></label>
+                                <input type="number" onchange="" class="form-control w-25" id="number" min="1" value="1">
+                                  
+                               
+                               
+                              <form action="/cart/<%=item._id%>/remove?_method=DELETE" method="POST">
+                                <button class="btn btn-sm btn-danger mt-2">Remove</button>
+
+                              </form>
+                               
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                <% } %>  
+        </div>
+
+        <div class="col-lg-5">
+            <% let totalAmount=0 %> 
+            
+            <ul class="list-group">
+                <%for(let item of user.cart){%>
+                 
+                
+                    <% totalAmount+=item.price %> 
+                    <li class="list-group-item">
+                        <span class="fw-bold"><%= item.name %> :</span>
+                        <span>&#x20B9 <%= item.price%> </span>
+                    </li>
+
+                   
+                    <% } %> 
+
+                    
+
+                    <li class="list-group-item">
+                        <span class="fw-bold">Total Amount :</span>
+                        <span>&#x20B9 <%= totalAmount %> </span>
+                    </li>
+            </ul>
+            
+            <div class="mb-2">
+              <!-- <form action="#"> -->
+               <a href="/shipping-details" class="btn btn-success btn-sm w-100 ">Proceed to Pay</a>
+              <!-- </form> -->
+               
+
+            </div>
+           
+           
+        </div>
+
+      <% }  else{%>
+        <%- include('../emptyCart')%>
+      <% } %>  
+	</div>
+</main>
+
+
+ 
+
+<%- include("../partials/footer") %>

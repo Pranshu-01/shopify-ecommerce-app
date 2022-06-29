@@ -1,0 +1,32 @@
+<%- include("../partials/header") %> 
+<%- include("../partials/navbar") %>
+<%- include("../partials/carousel") %>
+
+<main class="container">
+  
+
+  
+      <div class="row">
+          <% for(let product of products){ %>
+          <div class="col-lg-4 col-md-6 mb-3">
+              <div class="card mx-auto" style="width:20rem;">
+                  <img src="<%= product.img %> " class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title"><%= product.name %> </h5>
+                    <p class="card-text"><%= product.desc.substring(0,67)%> </p>
+                  
+                    <h5 class="card-title mb-2">&#x20B9 <%= product.price%> </h5>
+                    <% if(product.rating>0) {%>
+                    <h5 class="card-title mb-3" id="rating"><%= product.rating%> <i class="bi bi-star-fill" style="color:green; "></i></h5>
+                      <% } %>  
+
+                    <a href="/products/<%= product._id %> " class="btn btn-outline-success">Buy Now</a>
+                  </div>
+                </div>
+          </div>
+          <% } %>
+      </div>
+  </main>
+
+<%- include("../partials/footerHome") %> 
+
