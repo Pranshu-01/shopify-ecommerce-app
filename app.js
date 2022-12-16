@@ -47,7 +47,7 @@ app.set('views',path.join(__dirname,'views'));
 app.use(express.static(path.join(__dirname,'public')));
 app.use(express.urlencoded({extended:true}));
 app.use(methodOverride('_method'));
-mongoose.set('strictQuery', false);
+mongoose.set('strictQuery', true);
 
 const sessionConfig={
     secret:'weneedsomebettersecret',
